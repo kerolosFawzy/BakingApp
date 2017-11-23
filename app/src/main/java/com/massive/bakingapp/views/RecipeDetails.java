@@ -1,14 +1,15 @@
-package com.massive.bakingapp;
+package com.massive.bakingapp.views;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.massive.bakingapp.R;
+
+public class RecipeDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_recipe_details);
     }
 }

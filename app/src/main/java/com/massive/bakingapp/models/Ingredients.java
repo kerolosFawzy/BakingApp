@@ -1,37 +1,25 @@
 package com.massive.bakingapp.models;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.*;
 
-/**
- * Created by minafaw on 11/21/2017.
- */
-
-public class Ingredients implements Serializable {
-    private String quantity;
-    private String measure;
+public class Ingredients {
     private String ingredient;
+    private String measure;
+    private double quantity;
 
-    public String getQuantity() {
-        return quantity;
-    }
+    @JsonProperty("ingredient")
+    public String getIngredient() { return ingredient; }
+    @JsonProperty("ingredient")
+    public void setIngredient(String value) { this.ingredient = value; }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
+    @JsonProperty("measure")
+    public String getMeasure() { return measure; }
+    @JsonProperty("measure")
+    public void setMeasure(String value) { this.measure = value; }
 
-    public String getMeasure() {
-        return measure;
-    }
-
-    public void setMeasure(String measure) {
-        this.measure = measure;
-    }
-
-    public String getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(String ingredient) {
-        this.ingredient = ingredient;
-    }
+    @JsonProperty("quantity")
+    public double getQuantity() { return quantity; }
+    @JsonProperty("quantity")
+    public void setQuantity(double value) { this.quantity = value; }
 }
+

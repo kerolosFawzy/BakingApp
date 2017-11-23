@@ -17,6 +17,15 @@ public class Recipe implements Serializable {
     @Nullable
     private String image;
     private ArrayList<Steps> steps;
+    private ArrayList<Recipe> recipes;
+
+    public ArrayList<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
 
     public String getId() {
         return id;

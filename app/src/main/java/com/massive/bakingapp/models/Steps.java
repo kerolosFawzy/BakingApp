@@ -2,62 +2,43 @@ package com.massive.bakingapp.models;
 
 import android.support.annotation.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 /**
  * Created by minafaw on 11/21/2017.
  */
 
-public class Steps implements Serializable {
-    private String id;
-    @Nullable
-    private String shortDescription;
+public class Steps  {
     private String description;
-    @Nullable
-    private String videoURL;
-    @Nullable
+    private long id;
+    private String shortDescription;
     private String thumbnailURL;
+    private String videoURL;
 
-    public String getId() {
-        return id;
-    }
+    @JsonProperty("description")
+    public String getDescription() { return description; }
+    @JsonProperty("description")
+    public void setDescription(String value) { this.description = value; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @JsonProperty("id")
+    public long getId() { return id; }
+    @JsonProperty("id")
+    public void setId(long value) { this.id = value; }
 
-    @Nullable
-    public String getShortDescription() {
-        return shortDescription;
-    }
+    @JsonProperty("shortDescription")
+    public String getShortDescription() { return shortDescription; }
+    @JsonProperty("shortDescription")
+    public void setShortDescription(String value) { this.shortDescription = value; }
 
-    public void setShortDescription(@Nullable String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
+    @JsonProperty("thumbnailURL")
+    public String getThumbnailURL() { return thumbnailURL; }
+    @JsonProperty("thumbnailURL")
+    public void setThumbnailURL(String value) { this.thumbnailURL = value; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Nullable
-    public String getVideoURL() {
-        return videoURL;
-    }
-
-    public void setVideoURL(@Nullable String videoURL) {
-        this.videoURL = videoURL;
-    }
-
-    @Nullable
-    public String getThumbnailURL() {
-        return thumbnailURL;
-    }
-
-    public void setThumbnailURL(@Nullable String thumbnailURL) {
-        this.thumbnailURL = thumbnailURL;
-    }
+    @JsonProperty("videoURL")
+    public String getVideoURL() { return videoURL; }
+    @JsonProperty("videoURL")
+    public void setVideoURL(String value) { this.videoURL = value; }
 }
