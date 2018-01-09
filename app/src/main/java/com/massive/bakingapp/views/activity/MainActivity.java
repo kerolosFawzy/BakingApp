@@ -1,4 +1,4 @@
-package com.massive.bakingapp.views;
+package com.massive.bakingapp.views.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.massive.bakingapp.R;
+import com.massive.bakingapp.views.fragment.CardFragment;
 
 
 public class MainActivity extends AppCompatActivity {

@@ -3,6 +3,7 @@ package com.massive.bakingapp.models;
 import com.fasterxml.jackson.annotation.*;
 
 public class Ingredients {
+
     private String ingredient;
     private String measure;
     private double quantity;

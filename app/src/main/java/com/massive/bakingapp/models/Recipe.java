@@ -2,6 +2,9 @@ package com.massive.bakingapp.models;
 
 import android.support.annotation.Nullable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -10,13 +13,27 @@ import java.util.ArrayList;
  */
 
 public class Recipe implements Serializable {
+    @SerializedName("id")
+    @Expose
     private String id;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("ingredients")
+    @Expose
     private ArrayList<Ingredients> ingredients;
+    @SerializedName("servings")
+    @Expose
     private String servings;
     @Nullable
+    @SerializedName("image")
+    @Expose
     private String image;
+    @SerializedName("steps")
+    @Expose
     private ArrayList<Steps> steps;
+    @SerializedName("recipes")
+    @Expose
     private ArrayList<Recipe> recipes;
 
     public ArrayList<Recipe> getRecipes() {
@@ -58,6 +75,7 @@ public class Recipe implements Serializable {
     public void setServings(String servings) {
         this.servings = servings;
     }
+
 
     @Nullable
     public String getImage() {

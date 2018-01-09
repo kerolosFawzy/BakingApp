@@ -1,8 +1,9 @@
-package com.massive.bakingapp.views;
+package com.massive.bakingapp.views.fragment;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.massive.bakingapp.CardAdapter;
+import com.massive.bakingapp.adapters.CardAdapter;
 import com.massive.bakingapp.R;
 import com.massive.bakingapp.interfaces.CallBack;
 import com.massive.bakingapp.models.Ingredients;
@@ -21,8 +22,8 @@ import com.massive.bakingapp.models.Steps;
 import com.massive.bakingapp.network.NetworkCheck;
 import com.massive.bakingapp.network.RetroApiInterface;
 import com.massive.bakingapp.network.RetrofitClient;
-
-import org.json.JSONObject;
+import com.massive.bakingapp.utlies.Utlies;
+import com.massive.bakingapp.views.activity.RecipeDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class CardFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private View viewRoot;
     RetroApiInterface apiInterface;
-    Call<Recipe> call;
+    Call<ArrayList<Recipe>> call;
     static ArrayList<Ingredients> ingredients;
     static ArrayList<Steps> steps;
     ArrayList<Recipe> recipeArrayList;
@@ -56,14 +57,10 @@ public class CardFragment extends Fragment {
             recyclerView.setLayoutManager(layoutManager);
             apiInterface = RetrofitClient.retrofit().create(RetroApiInterface.class);
             call = apiInterface.GetRecipe();
-            call.enqueue(new Callback<Recipe>() {
+            call.enqueue(new Callback<ArrayList<Recipe>>() {
                 @Override
-                public void onResponse(Call<Recipe> call, Response<Recipe> response) {
-//                    ingredients=response.body().getIngredients();
-//                    steps=response.body().getSteps();
-//                    for (int i = 1; i <= 4; i++) {}
-                    if (response.body().getId() != null)
-                        recipeArrayList = response.body().getRecipes();
+                public void onResponse(Call<ArrayList<Recipe>> call, Response<ArrayList<Recipe>> response) {
+                    recipeArrayList = response.body();
 
                     RecyclerView.Adapter adapter = new CardAdapter(recipeArrayList, new CallBack() {
 
@@ -71,41 +68,21 @@ public class CardFragment extends Fragment {
                         public void getData(ArrayList<Ingredients> ingredients, ArrayList<Steps> steps) {
                             CardFragment.ingredients = ingredients;
                             CardFragment.steps = steps;
+                            Intent intent = new Intent(getActivity(), RecipeDetailsActivity.class);
+                            startActivity(intent);
                         }
                     }, getActivity());
                     recyclerView.setAdapter(adapter);
                 }
 
                 @Override
-                public void onFailure(Call<Recipe> call, Throwable t) {
-
+                public void onFailure(Call<ArrayList<Recipe>> call, Throwable t) {
+                    Toast.makeText(getActivity(), "onFailure", Toast.LENGTH_LONG).show();
                 }
             });
         } else
-            showErrormessage();
+            Utlies.showErrormessage(getActivity());
     }
 
-    public void showErrormessage() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setCancelable(false);
-        builder.setTitle("No Internet");
-        builder.setMessage("Internet is required. Please Retry.");
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
 
-        builder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                fragmentBody();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        Toast.makeText(getActivity(), "Network Unavailable!", Toast.LENGTH_LONG).show();
-    }
 }

@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/RecipeDetailsContainer"
-    tools:context="com.massive.bakingapp.views.RecipeDetails">
+    tools:context="com.massive.bakingapp.views.activity.RecipeDetailsActivity">
 
 </FrameLayout>

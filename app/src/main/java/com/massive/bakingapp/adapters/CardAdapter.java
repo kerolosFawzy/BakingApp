@@ -1,4 +1,4 @@
-package com.massive.bakingapp;
+package com.massive.bakingapp.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.massive.bakingapp.R;
 import com.massive.bakingapp.interfaces.CallBack;
 import com.massive.bakingapp.models.Recipe;
 
@@ -41,7 +41,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position) {
         Glide.with(mContext)
                 .load(Recipe.get(position).getImage())
-                .error(R.drawable.file)
+                .error(R.drawable.foodcook)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.Poster);
 
