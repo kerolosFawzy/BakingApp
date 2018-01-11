@@ -18,14 +18,16 @@ import com.massive.bakingapp.utlies.Utlies;
 
 
 public class DetialFragment extends Fragment {
-    RecyclerView IngreRecyclerView, StepsRecyclerView;
-    RecyclerView.LayoutManager layoutManager;
+    RecyclerView IngreRecyclerView;
+    RecyclerView StepsRecyclerView;
+    RecyclerView.LayoutManager IngrelayoutManager;
+    RecyclerView.LayoutManager SteplayoutManager;
     View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.details_fragment, container, false);
+        view = inflater.inflate(R.layout.details_fragment, container, true);
         showDetials();
         return view;
     }
@@ -33,18 +35,29 @@ public class DetialFragment extends Fragment {
     private void showDetials() {
         if (NetworkCheck.isNetworkAvailable(getActivity())) {
             IngreRecyclerView = view.findViewById(R.id.IngredientsRecyclerView);
-            layoutManager = new LinearLayoutManager(getActivity());
-            IngreRecyclerView.setLayoutManager(layoutManager);
-            StepsRecyclerView = view.findViewById(R.id.stepsRecyclerView);
-          //  StepsRecyclerView.setLayoutManager(layoutManager);
+            IngrelayoutManager = new LinearLayoutManager(getActivity());
+            IngreRecyclerView.setLayoutManager(IngrelayoutManager);
+
             try {
                 RecyclerView.Adapter adapter = new IngredientAdapter(CardFragment.ingredients);
                 IngreRecyclerView.setAdapter(adapter);
-                RecyclerView.Adapter adapter1 = new stepsAdapter(CardFragment.steps);
-                StepsRecyclerView.setAdapter(adapter1);
             } catch (NullPointerException e) {
                 Log.e("null", "no ingredients found ");
             }
+
+
+            StepsRecyclerView = view.findViewById(R.id.stepsRecyclerView);
+            SteplayoutManager = new LinearLayoutManager(getActivity());
+            StepsRecyclerView.setLayoutManager(SteplayoutManager);
+            RecyclerView.Adapter adapter1 = new stepsAdapter(CardFragment.steps);
+            StepsRecyclerView.setAdapter(adapter1);
+
+//            try {
+//                StepsRecyclerView.removeView(view);
+//            } catch (Exception e) {
+//
+//            }
+
         } else
             Utlies.showErrormessage(getActivity());
     }
