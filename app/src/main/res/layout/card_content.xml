@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/PosterImage"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/foodcook" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/FoodName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/PosterImage"
             app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/FoodNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/PosterImage"
             tools:text="7" />
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="31dp"

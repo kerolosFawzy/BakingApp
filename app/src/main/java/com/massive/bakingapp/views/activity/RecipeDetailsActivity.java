@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.massive.bakingapp.R;
+import com.massive.bakingapp.views.fragment.DetialFragment;
 
 public class RecipeDetailsActivity extends AppCompatActivity {
     private static final String TAG_RETAINED_FRAGMENT = "DetialsFragment";
@@ -19,7 +20,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         FragmentManager manager = getFragmentManager();
         DetialsFragment = manager.findFragmentByTag(TAG_RETAINED_FRAGMENT);
         if (DetialsFragment == null) {
-            DetialsFragment = new DialogFragment();
+            DetialsFragment = new DetialFragment();
             manager.beginTransaction()
                     .replace(R.id.RecipeDetailsContainer, DetialsFragment, TAG_RETAINED_FRAGMENT)
                     .commit();
