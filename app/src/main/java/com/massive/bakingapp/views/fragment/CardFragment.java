@@ -1,8 +1,6 @@
 package com.massive.bakingapp.views.fragment;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.massive.bakingapp.adapters.CardAdapter;
 import com.massive.bakingapp.R;
+import com.massive.bakingapp.adapters.CardAdapter;
 import com.massive.bakingapp.interfaces.CallBack;
 import com.massive.bakingapp.models.Ingredients;
 import com.massive.bakingapp.models.Recipe;
@@ -32,15 +30,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CardFragment extends Fragment {
+    static ArrayList<Ingredients> ingredients;
+    static ArrayList<Steps> steps;
+    RetroApiInterface apiInterface;
+    Call<ArrayList<Recipe>> call;
+    ArrayList<Recipe> recipeArrayList;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private View viewRoot;
-    RetroApiInterface apiInterface;
-    Call<ArrayList<Recipe>> call;
-    static ArrayList<Ingredients> ingredients;
-    static ArrayList<Steps> steps;
-    ArrayList<Recipe> recipeArrayList;
-    CallBack callBack;
 
     @Nullable
     @Override
@@ -70,6 +67,11 @@ public class CardFragment extends Fragment {
                             CardFragment.steps = steps;
                             Intent intent = new Intent(getActivity(), RecipeDetailsActivity.class);
                             startActivity(intent);
+                        }
+
+                        @Override
+                        public void getId(int id) {
+
                         }
                     }, getActivity());
                     recyclerView.setAdapter(adapter);

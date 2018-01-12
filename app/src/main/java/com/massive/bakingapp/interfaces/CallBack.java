@@ -11,4 +11,5 @@ import java.util.ArrayList;
 
 public interface CallBack {
     void getData(ArrayList<Ingredients> ingredients,ArrayList<Steps> steps);
+    void getId(int id);
 }
