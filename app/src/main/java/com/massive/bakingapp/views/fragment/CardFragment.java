@@ -36,7 +36,6 @@ public class CardFragment extends Fragment {
     Call<ArrayList<Recipe>> call;
     ArrayList<Recipe> recipeArrayList;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
     private View viewRoot;
 
     @Nullable
@@ -50,7 +49,7 @@ public class CardFragment extends Fragment {
     private void fragmentBody() {
         if (NetworkCheck.isNetworkAvailable(getActivity())) {
             recyclerView = viewRoot.findViewById(R.id.recycler_view);
-            layoutManager = new LinearLayoutManager(getActivity());
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(layoutManager);
             apiInterface = RetrofitClient.retrofit().create(RetroApiInterface.class);
             call = apiInterface.GetRecipe();

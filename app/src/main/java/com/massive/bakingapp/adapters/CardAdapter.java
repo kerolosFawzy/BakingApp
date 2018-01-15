@@ -13,8 +13,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.massive.bakingapp.R;
 import com.massive.bakingapp.interfaces.CallBack;
 import com.massive.bakingapp.models.Recipe;
+import com.massive.bakingapp.utlies.Constants;
 
 import java.util.ArrayList;
+
+import io.paperdb.Paper;
 
 /**
  * Created by minafaw on 11/22/2017.
@@ -54,6 +57,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 callBack.getData(Recipe.get(position).getIngredients(),Recipe.get(position).getSteps());
+                Paper.book().write(Constants.INGREDIENT_NAME_PAPER, Recipe.get(position).getName());
             }
         });
     }

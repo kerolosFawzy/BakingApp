@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.massive.bakingapp.R;
 import com.massive.bakingapp.adapters.IngredientAdapter;
@@ -18,11 +19,13 @@ import com.massive.bakingapp.interfaces.CallBack;
 import com.massive.bakingapp.models.Ingredients;
 import com.massive.bakingapp.models.Steps;
 import com.massive.bakingapp.network.NetworkCheck;
+import com.massive.bakingapp.utlies.Constants;
 import com.massive.bakingapp.utlies.Utlies;
 import com.massive.bakingapp.views.activity.RecipeDetailsActivity;
 
 import java.util.ArrayList;
 
+import io.paperdb.Paper;
 
 
 public class DetialFragment extends Fragment {
@@ -36,6 +39,13 @@ public class DetialFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.details_fragment, container, false);
+        Button button = rootView.findViewById(R.id.AddWidget);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Paper.book().write(Constants.INGREDIENT_PAPER, CardFragment.ingredients);
+            }
+        });
         showDetials();
         return rootView;
     }
@@ -60,7 +70,7 @@ public class DetialFragment extends Fragment {
                     @Override
                     public void getId(int id) {
                         Intent intent = new Intent(getActivity(), RecipeDetailsActivity.class);
-                        intent.putExtra("StepId", id);
+                        intent.putExtra(Constants.STEP_ID, id);
                         startActivity(intent);
                     }
                 });

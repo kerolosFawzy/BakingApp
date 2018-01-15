@@ -2,8 +2,8 @@ package com.massive.bakingapp.views.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.massive.bakingapp.R;
 import com.massive.bakingapp.views.fragment.CardFragment;
@@ -24,3 +24,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+
+////ToDo need widget  1
+////ToDo need database to store wediget data 2
+////ToDo need tablet handling 3
+////ToDo need hand view problems 4

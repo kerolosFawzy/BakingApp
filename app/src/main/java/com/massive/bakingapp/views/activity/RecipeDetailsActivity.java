@@ -10,6 +10,8 @@ import com.massive.bakingapp.R;
 import com.massive.bakingapp.views.fragment.DetialFragment;
 import com.massive.bakingapp.views.fragment.StepDetial;
 
+import io.paperdb.Paper;
+
 public class RecipeDetailsActivity extends AppCompatActivity {
     private static final String TAG_RETAINED_FRAGMENT = "DetialsFragment";
     private static final String TAG_RETAINED_FRAGMENT2 = "stepDetial";
@@ -20,7 +22,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
-
+        Paper.init(this);
         FragmentManager manager = getFragmentManager();
         DetialsFragment = manager.findFragmentByTag(TAG_RETAINED_FRAGMENT);
         if (DetialsFragment == null) {
@@ -36,8 +38,8 @@ public class RecipeDetailsActivity extends AppCompatActivity {
             stepDetial = manager.findFragmentByTag(TAG_RETAINED_FRAGMENT2);
             if (stepDetial == null) {
                 stepDetial = new StepDetial();
-                Bundle bundle=new Bundle();
-                bundle.putInt("StepId",id);
+                Bundle bundle = new Bundle();
+                bundle.putInt("StepId", id);
                 stepDetial.setArguments(bundle);
                 manager.beginTransaction().replace(R.id.RecipeDetailsContainer, stepDetial, TAG_RETAINED_FRAGMENT2)
                         .commit();
@@ -45,4 +47,5 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         }
 
     }
+
 }

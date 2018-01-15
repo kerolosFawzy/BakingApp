@@ -5,12 +5,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/covered_food_tray_on_a_hand_of_hotel_room_service"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/covered_food_tray_on_a_hand_of_hotel_room_service"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".views.activity.MainActivity">
@@ -21,6 +20,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.activity.RecipeDetailsActivity" />
+
+        <receiver android:name=".widgets.IngredentWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/ingredent_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
