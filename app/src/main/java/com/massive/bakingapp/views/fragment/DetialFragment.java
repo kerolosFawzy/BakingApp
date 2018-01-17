@@ -43,7 +43,11 @@ public class DetialFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Paper.book().write(Constants.INGREDIENT_PAPER, CardFragment.ingredients);
+                if (Paper.book().contains(Constants.INGREDIENT_PAPER)) {
+                    Paper.book().delete(Constants.INGREDIENT_PAPER);
+                    Paper.book().write(Constants.INGREDIENT_PAPER, CardFragment.ingredients);
+                } else
+                    Paper.book().write(Constants.INGREDIENT_PAPER, CardFragment.ingredients);
             }
         });
         showDetials();

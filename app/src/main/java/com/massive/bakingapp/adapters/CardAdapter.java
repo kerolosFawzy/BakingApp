@@ -32,6 +32,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         this.Recipe = Recipe;
         this.callBack = callBack;
         this.mContext = context;
+        Paper.init(context);
     }
 
     @Override
@@ -56,8 +57,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         holder.Poster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBack.getData(Recipe.get(position).getIngredients(),Recipe.get(position).getSteps());
-                Paper.book().write(Constants.INGREDIENT_NAME_PAPER, Recipe.get(position).getName());
+                callBack.getData(Recipe.get(position).getIngredients(), Recipe.get(position).getSteps());
+                if (Paper.book().contains(Constants.INGREDIENT_NAME_PAPER)) {
+                    Paper.book().delete(Constants.INGREDIENT_NAME_PAPER);
+                    Paper.book().write(Constants.INGREDIENT_NAME_PAPER, Recipe.get(position).getName());
+                } else {
+                    Paper.book().write(Constants.INGREDIENT_NAME_PAPER, Recipe.get(position).getName());
+                }
             }
         });
     }

@@ -5,14 +5,12 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.massive.bakingapp.R;
-import com.massive.bakingapp.models.Ingredients;
 import com.massive.bakingapp.utlies.Constants;
-
-import java.util.ArrayList;
 
 import io.paperdb.Paper;
 
@@ -24,23 +22,44 @@ public class IngredentWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredent_widget);
         Intent intent = new Intent(context, IngredentWidget.class);
         intent.setAction(ACTION);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-
         Paper.init(context);
-        ArrayList<Ingredients> ingredients = Paper.book().read(Constants.INGREDIENT_PAPER);
         String ingredientName = Paper.book().read(Constants.INGREDIENT_NAME_PAPER);
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredent_widget);
         views.setTextViewText(R.id.IngreName, ingredientName);
         views.setOnClickPendingIntent(R.id.WidgetLayout, pendingIntent);
+//        Intent ListViewIntent = new Intent(context, IngredientWidgetService.class);
+//        views.setRemoteAdapter(R.id.WidgetListView, ListViewIntent);
+        setRemoteAdapter(context, views);
+
+//        for (int i = 0; i < appWidgetId.length; ++i) {
+//            Intent intent1 = new Intent(context, MyWidgetService.class);
+//            intent1.putExtra(appWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId[i]);
+//            intent1.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+//            views.setRemoteAdapter(appWidgetId[i], R.id.WidgetListView, intent1);
+//            views.setEmptyView(R.id.WidgetListView, R.id.ContentLinearWidget);
+//            appWidgetManager.updateAppWidget(appWidgetId[i], views);
+//        }
+
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
+    }
+
+    private static void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
+        views.setRemoteAdapter(R.id.WidgetListView,
+                new Intent(context, IngredientWidgetService.class));
+    }
+
+    @SuppressWarnings("deprecation")
+    private static void setRemoteAdapterV11(Context context, @NonNull final RemoteViews views) {
+        views.setRemoteAdapter(0, R.id.WidgetListView,
+                new Intent(context, IngredientWidgetService.class));
     }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
@@ -64,5 +83,7 @@ public class IngredentWidget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
+
+
 }
 

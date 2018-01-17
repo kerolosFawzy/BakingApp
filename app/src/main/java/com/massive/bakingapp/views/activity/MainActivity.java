@@ -27,6 +27,5 @@ public class MainActivity extends AppCompatActivity {
 
 
 ////ToDo need widget  1
-////ToDo need database to store wediget data 2
 ////ToDo need tablet handling 3
 ////ToDo need hand view problems 4
