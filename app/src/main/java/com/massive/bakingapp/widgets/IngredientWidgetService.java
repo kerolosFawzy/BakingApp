@@ -10,7 +10,6 @@ import android.widget.RemoteViewsService;
 public class IngredientWidgetService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        WidgetDataProvider widgetDataProvider = new WidgetDataProvider(this, intent);
-        return widgetDataProvider;
+        return new WidgetDataProvider(this.getApplicationContext(), intent);
     }
 }

@@ -24,39 +24,21 @@ public class IngredentWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredent_widget);
+        Paper.init(context);
+
+        String ingredientName = Paper.book().read(Constants.INGREDIENT_NAME_PAPER);
+
         Intent intent = new Intent(context, IngredentWidget.class);
         intent.setAction(ACTION);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        Paper.init(context);
-        String ingredientName = Paper.book().read(Constants.INGREDIENT_NAME_PAPER);
-        views.setTextViewText(R.id.IngreName, ingredientName);
         views.setOnClickPendingIntent(R.id.WidgetLayout, pendingIntent);
 
-        Intent intent2 = new Intent(context, IngredientWidgetService.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        views.setRemoteAdapter(appWidgetId, R.id.WidgetListView, intent2);
-        // setRemoteAdapter(context, views);
-//        ArrayList<Ingredients> ingredients = Paper.book().read(Constants.INGREDIENT_PAPER);
-//        for (Ingredients ingredient : ingredients) {
-//            RemoteViews views1 = new RemoteViews(context.getPackageName(), R.layout.widget_content);
-//            views1.setTextViewText(R.id.WidgetIngreName, ingredient.getIngredient());
-//            String s = String.valueOf(ingredient.getQuantity());
-//            views1.setTextViewText(R.id.WidgetQuantity, s);
-//            views1.setTextViewText(R.id.WidgetMeasure, ingredient.getMeasure());
-//            views.addView(R.id.WidgetListView,views1);
-//        }
+        views.setTextViewText(R.id.IngreName, ingredientName);
 
-
-//        for (int i = 0; i < appWidgetId.length; ++i) {
-//            Intent intent1 = new Intent(context, MyWidgetService.class);
-//            intent1.putExtra(appWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId[i]);
-//            intent1.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-//            views.setRemoteAdapter(appWidgetId[i], R.id.WidgetListView, intent1);
-//            views.setEmptyView(R.id.WidgetListView, R.id.ContentLinearWidget);
-//            appWidgetManager.updateAppWidget(appWidgetId[i], views);
-//        }
-
+        Intent MainIntent = new Intent(context, IngredientWidgetService.class);
+        MainIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        MainIntent.setData(Uri.parse(MainIntent.toUri(Intent.URI_INTENT_SCHEME)));
+        views.setRemoteAdapter( R.id.WidgetListView, MainIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
@@ -76,6 +58,12 @@ public class IngredentWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
+            RemoteViews views = new RemoteViews(
+                    context.getPackageName(),
+                    R.layout.ingredent_widget
+            );
+            Intent intent = new Intent(context, IngredientWidgetService.class);
+            views.setRemoteAdapter(R.id.WidgetListView, intent);
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }

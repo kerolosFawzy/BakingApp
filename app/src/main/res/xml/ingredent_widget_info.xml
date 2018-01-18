@@ -6,5 +6,5 @@
     android:minWidth="250dp"
     android:previewImage="@drawable/covered_food_tray_on_a_hand_of_hotel_room_service"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="30"
+    android:updatePeriodMillis="3600"
     android:widgetCategory="home_screen"/>
