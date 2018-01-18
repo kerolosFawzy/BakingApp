@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         FragmentManager fragmentManager=getFragmentManager();
         Recipe=fragmentManager.findFragmentByTag(TAG_RETAINED_FRAGMENT);
         if (Recipe==null){
@@ -24,8 +25,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-
-////ToDo need widget  1
-////ToDo need tablet handling 3
-////ToDo need hand view problems 4

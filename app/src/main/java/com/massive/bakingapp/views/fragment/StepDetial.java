@@ -27,6 +27,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.massive.bakingapp.R;
 import com.massive.bakingapp.models.Steps;
+import com.massive.bakingapp.utlies.Constants;
 import com.massive.bakingapp.views.activity.RecipeDetailsActivity;
 
 public class StepDetial extends Fragment {
@@ -50,7 +51,7 @@ public class StepDetial extends Fragment {
         simpleExoPlayerView = RootView.findViewById(R.id.videoView);
 
         Bundle bundle = getArguments();
-        id = bundle.getInt("StepId");
+        id = bundle.getInt(Constants.STEP_ID);
         if (id == CardFragment.steps.size()-1)
             Next.setVisibility(View.GONE);
 
@@ -65,14 +66,14 @@ public class StepDetial extends Fragment {
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.putExtra("StepId", id - 1);
+                intent.putExtra(Constants.STEP_ID, id - 1);
                 startActivity(intent);
             }
         });
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent.putExtra("StepId", id + 1);
+                intent.putExtra(Constants.STEP_ID, id + 1);
                 startActivity(intent);
             }
         });
