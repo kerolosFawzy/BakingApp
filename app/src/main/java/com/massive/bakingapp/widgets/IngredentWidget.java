@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -30,9 +31,22 @@ public class IngredentWidget extends AppWidgetProvider {
         String ingredientName = Paper.book().read(Constants.INGREDIENT_NAME_PAPER);
         views.setTextViewText(R.id.IngreName, ingredientName);
         views.setOnClickPendingIntent(R.id.WidgetLayout, pendingIntent);
-//        Intent ListViewIntent = new Intent(context, IngredientWidgetService.class);
-//        views.setRemoteAdapter(R.id.WidgetListView, ListViewIntent);
-        setRemoteAdapter(context, views);
+
+        Intent intent2 = new Intent(context, IngredientWidgetService.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+        views.setRemoteAdapter(appWidgetId, R.id.WidgetListView, intent2);
+        // setRemoteAdapter(context, views);
+//        ArrayList<Ingredients> ingredients = Paper.book().read(Constants.INGREDIENT_PAPER);
+//        for (Ingredients ingredient : ingredients) {
+//            RemoteViews views1 = new RemoteViews(context.getPackageName(), R.layout.widget_content);
+//            views1.setTextViewText(R.id.WidgetIngreName, ingredient.getIngredient());
+//            String s = String.valueOf(ingredient.getQuantity());
+//            views1.setTextViewText(R.id.WidgetQuantity, s);
+//            views1.setTextViewText(R.id.WidgetMeasure, ingredient.getMeasure());
+//            views.addView(R.id.WidgetListView,views1);
+//        }
+
 
 //        for (int i = 0; i < appWidgetId.length; ++i) {
 //            Intent intent1 = new Intent(context, MyWidgetService.class);
@@ -42,6 +56,7 @@ public class IngredentWidget extends AppWidgetProvider {
 //            views.setEmptyView(R.id.WidgetListView, R.id.ContentLinearWidget);
 //            appWidgetManager.updateAppWidget(appWidgetId[i], views);
 //        }
+
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
 

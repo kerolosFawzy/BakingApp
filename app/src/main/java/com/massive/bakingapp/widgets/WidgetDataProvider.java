@@ -31,7 +31,6 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     public void onCreate() {
         Paper.init(context);
         ingredients = Paper.book().read(Constants.INGREDIENT_PAPER);
-
     }
 
     @Override
@@ -46,16 +45,16 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getCount() {
-        return 0;
+        return ingredients.size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_content);
-        remoteViews.setTextViewText(R.id.WidgetIngreName,ingredients.get(position).getIngredient());
-        String s= String.valueOf(ingredients.get(position).getQuantity());
-        remoteViews.setTextViewText(R.id.WidgetQuantity,s);
-        remoteViews.setTextViewText(R.id.WidgetMeasure,ingredients.get(position).getMeasure());
+        remoteViews.setTextViewText(R.id.WidgetIngreName, ingredients.get(position).getIngredient());
+        String s = String.valueOf(ingredients.get(position).getQuantity());
+        remoteViews.setTextViewText(R.id.WidgetQuantity, s);
+        remoteViews.setTextViewText(R.id.WidgetMeasure, ingredients.get(position).getMeasure());
         return remoteViews;
     }
 
@@ -66,16 +65,18 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
+
+
 }
