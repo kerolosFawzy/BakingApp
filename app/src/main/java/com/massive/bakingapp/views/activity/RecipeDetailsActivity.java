@@ -54,11 +54,12 @@ public class RecipeDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         id = intent.getIntExtra(Constants.STEP_ID, -1);
         stepDetial = manager.findFragmentByTag(TAG_RETAINED_FRAGMENT2);
-
-        if (savedInstanceState != null && id == -1) {
-            id = savedInstanceState.getInt(Constants.STEP_ID);
+        if (stepDetial == null) {
+            if (savedInstanceState != null && id == -1) {
+                id = savedInstanceState.getInt(Constants.STEP_ID);
+            }
         }
-
+        
         if (TabletMode) {
             if (id == -1)
                 id = 1;

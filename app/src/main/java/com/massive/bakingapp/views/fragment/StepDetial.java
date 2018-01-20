@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -39,6 +41,7 @@ public class StepDetial extends Fragment {
     Intent intent;
     View RootView;
     TrackSelector selector;
+    ImageView imageView;
     private Steps steps;
     private SimpleExoPlayerView simpleExoPlayerView;
     private SimpleExoPlayer player;
@@ -56,6 +59,7 @@ public class StepDetial extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         RootView = inflater.inflate(R.layout.step_detial_fragment, container, false);
         TextView description = RootView.findViewById(R.id.Description);
+        imageView = RootView.findViewById(R.id.StepImageView);
         Button Next = RootView.findViewById(R.id.Next);
         Button previous = RootView.findViewById(R.id.Previous);
 
@@ -104,12 +108,18 @@ public class StepDetial extends Fragment {
             player.seekTo(StepDetial.POSITION);
         }
         Handler handler = new Handler();
+
         if (!steps.getThumbnailURL().isEmpty()) {
-            videoUri = Uri.parse(steps.getThumbnailURL());
+            Glide.with(getActivity())
+                    .load(steps.getThumbnailURL())
+                    .into(imageView);
+            simpleExoPlayerView.setVisibility(View.GONE);
         } else if (!steps.getVideoURL().isEmpty()) {
             videoUri = Uri.parse(steps.getVideoURL());
+            imageView.setVisibility(View.GONE);
         } else {
             simpleExoPlayerView.setVisibility(View.GONE);
+            imageView.setVisibility(View.GONE);
         }
         if (videoUri != null) {
             DefaultHttpDataSourceFactory sourceFactory = new DefaultHttpDataSourceFactory(userAgent);
@@ -128,8 +138,9 @@ public class StepDetial extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        POSITION = player.getCurrentPosition();
-        releaseExoplayer();
+        if (player != null) {
+            POSITION = player.getCurrentPosition();
+        }
     }
 
     @Override
