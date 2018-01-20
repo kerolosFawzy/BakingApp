@@ -59,7 +59,7 @@ public class RecipeDetailsActivity extends AppCompatActivity {
                 id = savedInstanceState.getInt(Constants.STEP_ID);
             }
         }
-        
+
         if (TabletMode) {
             if (id == -1)
                 id = 1;
