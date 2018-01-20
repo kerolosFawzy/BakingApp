@@ -19,7 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.activity.RecipeDetailsActivity" />
+        <activity
+            android:name=".views.activity.RecipeDetailsActivity"
+            android:parentActivityName=".views.activity.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.activity.MainActivity" />
+        </activity>
 
         <receiver android:name=".widgets.IngredentWidget">
             <intent-filter>
@@ -33,12 +39,7 @@
         <service
             android:name=".widgets.IngredientWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-        <!--<service-->
-        <!--android:name=".widgets.MyWidgetService"-->
-        <!--android:enabled="true"-->
-        <!--android:exported="false"-->
-        <!--android:permission="android.permission.BIND_REMOTEVIEWS"/>-->
-        <!--<service android:name=".widgets.IngredientWidgetService" />-->
+
     </application>
 
 </manifest>

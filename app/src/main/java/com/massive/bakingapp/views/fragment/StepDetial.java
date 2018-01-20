@@ -33,26 +33,35 @@ import com.massive.bakingapp.views.activity.RecipeDetailsActivity;
 public class StepDetial extends Fragment {
 
 
+    private static long POSITION;
     Uri videoUri;
     int id;
     Intent intent;
+    View RootView;
+    TrackSelector selector;
     private Steps steps;
     private SimpleExoPlayerView simpleExoPlayerView;
     private SimpleExoPlayer player;
+    private String postion = "position";
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(postion, POSITION);
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View RootView = inflater.inflate(R.layout.step_detial_fragment, container, false);
-        TextView description=RootView.findViewById(R.id.Description);
+        RootView = inflater.inflate(R.layout.step_detial_fragment, container, false);
+        TextView description = RootView.findViewById(R.id.Description);
         Button Next = RootView.findViewById(R.id.Next);
         Button previous = RootView.findViewById(R.id.Previous);
-        simpleExoPlayerView = new SimpleExoPlayerView(getActivity());
-        simpleExoPlayerView = RootView.findViewById(R.id.videoView);
 
         Bundle bundle = getArguments();
         id = bundle.getInt(Constants.STEP_ID);
-        if (id == CardFragment.steps.size()-1)
+        if (id == CardFragment.steps.size() - 1)
             Next.setVisibility(View.GONE);
 
         if (id == 0)
@@ -60,7 +69,8 @@ public class StepDetial extends Fragment {
 
         steps = CardFragment.steps.get(id);
 
-        exoplayerShow();
+        exoplayerShow(savedInstanceState);
+
         intent = new Intent(getActivity(), RecipeDetailsActivity.class);
 
         previous.setOnClickListener(new View.OnClickListener() {
@@ -82,11 +92,17 @@ public class StepDetial extends Fragment {
     }
 
 
-    private void exoplayerShow() {
+    private void exoplayerShow(Bundle savedInstanceState) {
+        simpleExoPlayerView = new SimpleExoPlayerView(getActivity());
+        simpleExoPlayerView = RootView.findViewById(R.id.videoView);
         String userAgent = Util.getUserAgent(getActivity(), "bakingapp");
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-        TrackSelector selector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
+        selector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
         player = ExoPlayerFactory.newSimpleInstance(getActivity(), selector);
+        if (savedInstanceState != null) {
+            StepDetial.POSITION = (long) savedInstanceState.get(postion);
+            player.seekTo(StepDetial.POSITION);
+        }
         Handler handler = new Handler();
         if (!steps.getThumbnailURL().isEmpty()) {
             videoUri = Uri.parse(steps.getThumbnailURL());
@@ -102,15 +118,39 @@ public class StepDetial extends Fragment {
             simpleExoPlayerView.setPlayer(player);
             simpleExoPlayerView.setUseController(true);
             simpleExoPlayerView.requestFocus();
-
             player.prepare(source);
+
             player.setPlayWhenReady(true);
         }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        POSITION = player.getCurrentPosition();
+        releaseExoplayer();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        player.release();
+        releaseExoplayer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        releaseExoplayer();
+    }
+
+    private void releaseExoplayer() {
+        if (player != null) {
+            player.stop();
+            player.release();
+            selector = null;
+            simpleExoPlayerView = null;
+            player = null;
+        }
     }
 }
